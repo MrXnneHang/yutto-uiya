@@ -16,3 +16,4 @@ repos:
         files: \.(py|md)$ # 同时检查 .py 和 .md 文件
         pass_filenames: false
         verbose: true
+        args: ['--format', 'brief']
