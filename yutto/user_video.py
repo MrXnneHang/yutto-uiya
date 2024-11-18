@@ -3,7 +3,7 @@ from __future__ import annotations
 from utils.subproc import run_command
 
 
-def user_single_video(url: str, args="", SESSDATA=""):
+def user_single_video(url: str, args: list, SESSDATA: str = None) -> int:
     """
     下载单个视频
     :param url: 视频链接
@@ -15,7 +15,7 @@ def user_single_video(url: str, args="", SESSDATA=""):
     if SESSDATA:
         command.extend(["--sessdata", SESSDATA])
     if args:
-        command.extend(args.split())  # 以空格分割额外参数
+        command.extend(args)  # 以空格分割额外参数
 
     try:
         run_command(command)
