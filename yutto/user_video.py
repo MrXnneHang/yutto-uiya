@@ -25,6 +25,9 @@ def user_single_video(url: str, args: list = None, SESSDATA: str = None) -> int:
 
 
 # TODO: 似乎这个p参数不能指定要下载的视频，只会默认下载第一个视频
+# Solve:批量下载需要指定-b参数
+# 对于番剧需要进入番剧主页,例如: https://www.bilibili.com/bangumi/media/md23053814
+# 因为番剧不是&id的形式，而是url自增，逻辑不同。
 def user_multi_video(
     urls: str, p: str = "", args: list = None, SESSDATA: str = None
 ) -> int:
@@ -39,10 +42,10 @@ def user_multi_video(
     """
     if p:
         # 指定下载
-        command = ["yutto", urls, "-p", p]
+        command = ["yutto", urls, "-p", p, "-b"]
     else:
         # 全部下载
-        command = ["yutto", urls, "-p", "1~-1"]
+        command = ["yutto", urls, "-p", "1~-1", "-b"]
 
     if SESSDATA:
         command.extend(["--sessdata", SESSDATA])
