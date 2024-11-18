@@ -20,8 +20,8 @@ def load_config(path: str) -> dict:
         return {}
 
 
-def generate_args() -> str:
-    """生成命令行参数"""
+def generate_basic_args() -> str:
+    """根据args.yaml生成基础参数"""
     config = load_config("./configs/args.yaml")
     args = ["-d", config["download_dir"]]
 
