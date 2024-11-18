@@ -122,3 +122,9 @@ dmypy.json
 
 # logs
 log
+
+
+# yutto
+
+*.mp4
+*.ass
