@@ -57,3 +57,26 @@ def user_multi_video(
     except Exception as e:
         return 404
     return 200
+
+
+# 合集下载,不支持选集，要选集参考上multi_video用法。
+# 示例：https://space.bilibili.com/100969474/channel/seriesdetail?sid=1947439
+def user_collection_video(url: str, args: list = None, SESSDATA: str = None):
+    """
+    下载合集视频
+    :param url: 合集链接
+    :param args: 额外输入参数
+    :param SESSDATA: SESSDATA, 用于保持用户登录信息
+    :return: 200/404/500
+    """
+    command = ["yutto", url, "-b"]
+    if SESSDATA:
+        command.extend(["--sessdata", SESSDATA])
+    if args:
+        command.extend(args)  # 以空格分割额外参数
+
+    try:
+        run_command(command)
+    except Exception as e:
+        return 404
+    return 200
