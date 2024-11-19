@@ -7,6 +7,7 @@ from yutto import (
     user_multi_video,
     user_single_favor_list,
     user_single_video,
+    user_space_video,
 )
 
 if __name__ == "__main__":
@@ -37,7 +38,15 @@ if __name__ == "__main__":
     # )
 
     # ----------------------
-    user_multi_favor_list(
-        url="https://space.bilibili.com/100969474/favlist",
-        args=args,
-    )
+    # user_multi_favor_list(
+    #     url="https://space.bilibili.com/100969474/favlist",
+    #     args=args,
+    # )
+
+    # TODO:Failed
+    # ----------------------
+    # user_space_video(
+    #     url="https://space.bilibili.com/100969474/video",
+    #     args=args,
+    #     page="1",
+    # )

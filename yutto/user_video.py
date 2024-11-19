@@ -126,3 +126,28 @@ def user_multi_favor_list(url: str, args: list = None, SESSDATA: str = None) -> 
     except Exception as e:
         return 404
     return 200
+
+
+# TODO: 似乎不清楚怎么调用，缺少了page参数，问一下作者
+# 下载用户投稿的所有视频
+# 不支持选集
+# 示例：https://space.bilibili.com/100969474/video
+def user_space_video(url: str, args: list = None, SESSDATA: str = None) -> int:
+    """
+    下载用户所有视频
+    :param url: 用户空间->投稿
+    :param args: 额外输入参数
+    :param SESSDATA: SESSDATA, 用于保持用户登录信息
+    :return: 200/404/500
+    """
+    command = ["yutto", url, "-b"]
+    if SESSDATA:
+        command.extend(["--sessdata", SESSDATA])
+    if args:
+        command.extend(args)
+
+    try:
+        run_command(command)
+    except Exception as e:
+        return 404
+    return 200

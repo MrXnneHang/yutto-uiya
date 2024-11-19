@@ -6,6 +6,7 @@ from .user_video import (
     user_multi_video,
     user_single_favor_list,
     user_single_video,
+    user_space_video,
 )
 
 __all__ = [
@@ -14,4 +15,5 @@ __all__ = [
     "user_collection_video",
     "user_single_favor_list",
     "user_multi_favor_list",
+    "user_space_video",
 ]
