@@ -80,3 +80,49 @@ def user_collection_video(url: str, args: list = None, SESSDATA: str = None):
     except Exception as e:
         return 404
     return 200
+
+
+# 收藏夹下载,不支持选集
+# 示例：https://space.bilibili.com/100969474/favlist?fid=1306978874&ftype=create
+def user_single_favor_list(url: str, args: list = None, SESSDATA: str = None) -> int:
+    """
+    下载单个收藏夹视频
+    :param url: 收藏夹链接
+    :param args: 额外输入参数
+    :param SESSDATA: SESSDATA, 用于保持用户登录信息
+    :return: 200/404/500
+    """
+    command = ["yutto", url, "-b"]
+    if SESSDATA:
+        command.extend(["--sessdata", SESSDATA])
+    if args:
+        command.extend(args)
+
+    try:
+        run_command(command)
+    except Exception as e:
+        return 404
+    return 200
+
+
+# 下载用户所有收藏夹的所有视频
+# 不支持选集，不建议使用，硬盘会爆炸。
+def user_multi_favor_list(url: str, args: list = None, SESSDATA: str = None) -> int:
+    """
+    下载多个收藏夹视频
+    :param url:  默认收藏夹链接
+    :param args: 额外输入参数
+    :param SESSDATA: SESSDATA, 用于保持用户登录信息
+    :return: 200/404/500
+    """
+    command = ["yutto", url, "-b"]
+    if SESSDATA:
+        command.extend(["--sessdata", SESSDATA])
+    if args:
+        command.extend(args)
+
+    try:
+        run_command(command)
+    except Exception as e:
+        return 404
+    return 200
