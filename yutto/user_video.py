@@ -29,7 +29,7 @@ def user_single_video(url: str, args: list = None, SESSDATA: str = None) -> int:
 # 对于番剧需要进入番剧主页,例如: https://www.bilibili.com/bangumi/media/md23053814
 # 因为番剧不是&id的形式，而是url自增，逻辑不同。
 def user_multi_video(
-    urls: str, p: str = "", args: list = None, SESSDATA: str = None
+    url: str, p: str = "", args: list = None, SESSDATA: str = None
 ) -> int:
     """
     下载一个视频列表下的多个视频
@@ -42,10 +42,10 @@ def user_multi_video(
     """
     if p:
         # 指定下载
-        command = ["yutto", urls, "-p", p, "-b"]
+        command = ["yutto", url, "-p", p, "-b"]
     else:
         # 全部下载
-        command = ["yutto", urls, "-p", "1~-1", "-b"]
+        command = ["yutto", url, "-p", "1~-1", "-b"]
 
     if SESSDATA:
         command.extend(["--sessdata", SESSDATA])
