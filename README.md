@@ -25,17 +25,7 @@
 
 ```css
 yutto-uiya/
-├── api/ # 会在这里复用yutto下面的库以及一点点爬虫实现功能扩展
-│   ├── anime/ # 番剧
-│   │   └── __init__.py
-│   ├── user/ # 用户发布的单p和多p的视频
-│   │   └── __init__.py
-│   ├── favlist/ # 收藏夹
-│   │   └── __init__.py
-│   ├── collection/ # 合集
-│   │   └── __init__.py
-│   └── course/ # 课程
-│       └── __init__.py
+│
 ├── yutto/ # 把yutto shell指令使用python调用，形成最小模块
 │   └── __init__.py
 │
@@ -45,3 +35,30 @@ yutto-uiya/
 │
 └── webui.py # 这个是我们的 webui 入口文件
 ```
+## 如何部署它:
+
+你需要`ffmpeg`，我正在研究如何为`windows`用户指定相对路径里的`ffmpeg`。<br>
+
+对于`mac/linux`用户:<br>
+
+```shell
+brew install ffmpeg # mac
+sudo apt install ffmpeg # linux
+```
+
+然后配置`python`环境:<br>
+
+```shell
+python >=3.9
+pip install -r requirements.txt
+```
+
+启动:<br>
+
+```shell
+python webui.py
+```
+
+## 如何使用:
+
+我为每个功能都在`webui`中写了说明，放心食用~
