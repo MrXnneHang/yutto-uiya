@@ -13,8 +13,8 @@ from entries import (
 
 # 主界面布局
 with gr.Blocks() as demo:
-    with gr.Tab("User Video"):
-        with gr.Tab("single-video"):
+    with gr.Tab("用户视频"):
+        with gr.Tab("单个视频"):
             # 添加说明文本区域
             gr.Markdown(
                 """
@@ -50,7 +50,7 @@ with gr.Blocks() as demo:
                 entry_user_single, inputs=[url_input, quality_input], outputs=output
             )
 
-        with gr.Tab("multi-video"):
+        with gr.Tab("视频列表（多个视频）"):
             # 添加说明文本区域
             gr.Markdown(
                 """
@@ -94,7 +94,7 @@ with gr.Blocks() as demo:
                 outputs=output,
             )
 
-    with gr.Tab("User Favor List"):
+    with gr.Tab("收藏夹"):
         gr.Markdown(
             """
         ## 对用户整个收藏夹下载：(不支持默认收藏夹，不建议尝试)
@@ -127,7 +127,7 @@ with gr.Blocks() as demo:
         download_button.click(
             entry_favor_single_list, inputs=[url_input, quality_input], outputs=output
         )
-    with gr.Tab("User Collection List"):
+    with gr.Tab("合集"):
         gr.Markdown(
             """
         ## 对用户发布合集下载：（不支持选集，只能全下）
@@ -160,7 +160,7 @@ with gr.Blocks() as demo:
         download_button.click(
             entry_collection, inputs=[url_input, quality_input], outputs=output
         )
-    with gr.Tab("Bangumi"):
+    with gr.Tab("番剧"):
         gr.Markdown(
             """
         ## 对番剧进行下载：（支持选集，不输入指定全下）
@@ -210,6 +210,21 @@ with gr.Blocks() as demo:
         [一目生的个人空间](https://space.bilibili.com/556737824?spm_id_from=333.788.0.0)<br>
         你可以私信我或者在我相关视频底下留言。<br>
 
+        """
+        )
+    with gr.Tab("关于 yutto-uiya"):
+        gr.Markdown(
+            """
+        ## 它的核心是`yutto`:
+        作者原仓库:[yutto](https://github.com/yutto-dev/yutto)<br>
+        我只是写了这个 gradio-WebUI:[yutto-uiya](https://github.com/MrXnneHang/yutto-uiya/)<br>
+
+        如果有更多关于界面和操作上的优化，以及功能的需求欢迎补充，因为`yutto`的功能实际上还有好多有待发掘。<br>
+        我会考虑尝试进行拓展。<br>
+
+        最后，祝各位使用愉快!<br>
+
+        ![](https://image.baidu.com/search/down?url=https://img3.doubanio.com/view/photo/m/public/p2915590863.webp)
         """
         )
 # 启动 Gradio 应用
