@@ -1,0 +1,5 @@
+chrome_driver: './chromedriver-linux64/chromedriver'
+chrome: './chrome-linux64/chrome'
+
+target_url: 'https://www.bilibili.com/'
+
