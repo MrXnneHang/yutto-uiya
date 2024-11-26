@@ -7,7 +7,7 @@ import yaml
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 
-from utils.config import load_config
+from utils.config import load_config, write_config
 
 
 class Wish:
@@ -60,5 +60,13 @@ if __name__ == "__main__":
         if cookie["name"] == "SESSDATA":
             sessdata = cookie["value"]
             print(cookie["name"] + ": ", sessdata)
+
+    if sessdata:
+        print(
+            "复制你的SESSDATA，然后填写到./configs/args.yaml的SESSDATA中,写在双引号中"
+        )
+    else:
+        print("第一次打开浏览器，需要先登陆bilibili账号，然后再次运行程序")
+    print("可以关闭该窗口了....")
 
     sleep(100000)
