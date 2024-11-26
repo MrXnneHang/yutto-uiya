@@ -61,12 +61,31 @@ python webui.py
 
 ## 一些配置:
 
-参见`./configs/`:<br>
+参见[`./configs/`](https://github.com/MrXnneHang/yutto-uiya/tree/gradio-webui/configs):<br>
 
-- `args.yaml`: 基础参数配置文件，`download_dir`用于指定下载的目标路径，`sess_data`用于伪装用户登陆信息。<br>
+- `args.yaml`:
+```yaml
+SESSDATA: "" # SESSDATA,用来伪装登陆信息
+download_dir: "./downloads" # 下载后保存的路径
+
+no_danmaku: true # 不下载弹幕。
+
+# 这两个决定能下哪些视频，清晰度，用户有访问哪些视频的权限，就能下哪些视频，
+# 比如大会员视频就需要大会员登陆的SESSDATA
+# 而无登陆用户最高只能下载480p
+login_strict: true # 仅当SESSDATA不为空时生效，严格校验登陆信息是否有效
+                   # 如果SESSDATA填写错误，会导致校验失败。
+vip_strict: false # 仅当SESSDATA不为空时生效，严格校验大会员，
+                  # 如果不是大会员，请设置false,否则会无法下载。
+                  # 如果是大会员，请设置true,否则有时候会被当成普通用户拦截。
+
+```
+
 - `chrome.yaml`: 配置`chrome-driver`来获取`sess_data`,如果你可以手动获取`sess_data`，那么这个文件可以不用配置。<br>
 
 ## 如何使用:
+
+### 下载更高的清晰度或者大会员视频(你需要SESSDATA)
 
 `sess_data`的获取:<br>
 
@@ -76,6 +95,8 @@ python webui.py
 python webrowser_config.py
 ```
 
-第一次打开后需要在打开的`chrome`页面中登陆你的`bilibili`账号，然后关闭页面，再次运行`webrowser_config.py`。如果读取到有效的`sess_data`，它会为你直接写入配置文件。<br>
+第一次打开后需要在打开的`chrome`页面中登陆你的`bilibili`账号，然后关闭页面，再次运行`webrowser_config.py`。在终端中找到你对应的`SESSDATA`然后写入到`args.yaml`中。<br>
+
+### 如何用它下载视频:
 
 我为每个功能都在`webui`中写了说明，放心食用~<br>
