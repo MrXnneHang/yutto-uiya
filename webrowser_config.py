@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 import json
-from time import sleep
 from pathlib import Path
+from time import sleep
 
 import yaml
 from selenium import webdriver
@@ -11,7 +11,7 @@ from selenium.webdriver.chrome.service import Service
 from utils.config import load_config, write_config
 
 
-class Wish(object):
+class Wish:
     def __init__(self):
         self.config = load_config("./configs/chrome.yaml")
         self.option = webdriver.ChromeOptions()
@@ -21,13 +21,11 @@ class Wish(object):
         self.option.binary_location = self.chrome_path
         # 获取用户数据目录的绝对路径
         script_dir = Path(__file__).resolve().parent
-        self.user_data_dir = script_dir / 'User Data'
+        self.user_data_dir = script_dir / "User Data"
 
-
-        self.option.add_argument(rf"user-data-dir={str(self.user_data_dir)}")  # 浏览器路径
-
-
-
+        self.option.add_argument(
+            rf"user-data-dir={str(self.user_data_dir)}"
+        )  # 浏览器路径
 
         # 使用Service指定ChromeDriver的路径
         self.service = Service(self.chrome_driver_path)

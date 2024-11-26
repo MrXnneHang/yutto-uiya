@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import os
+import subprocess
 from pathlib import Path
+
 import gradio as gr
 
 from entries import (
@@ -13,15 +15,13 @@ from entries import (
     quality_choice,
 )
 
-import subprocess
-
 # 执行 ffmpeg -version 命令来检查 ffmpeg 是否可以被访问
 try:
     result = subprocess.run(
-        ['yutto', '-v'],  # ffmpeg 的版本命令
-        capture_output=True,     # 捕获标准输出和标准错误
-        text=True,               # 将输出以文本形式处理，而不是字节流
-        check=True               # 如果命令返回非零退出状态码，则抛出异常
+        ["yutto", "-v"],  # ffmpeg 的版本命令
+        capture_output=True,  # 捕获标准输出和标准错误
+        text=True,  # 将输出以文本形式处理，而不是字节流
+        check=True,  # 如果命令返回非零退出状态码，则抛出异常
     )
 
     print("yutto is accessible. Version info:")
