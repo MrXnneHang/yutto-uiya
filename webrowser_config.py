@@ -1,15 +1,8 @@
 from __future__ import annotations
 
-import hashlib
 import json
-import re
-import socket
-import time
-from datetime import datetime, timedelta
-from hashlib import sha1
 from time import sleep
 
-import requests
 import yaml
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -58,4 +51,14 @@ if __name__ == "__main__":
     # 初始化driver
     driver = webdriver.Chrome(service=fps.service, options=fps.option)
     driver.get(fps.config["target_url"])
-    sleep(10000)
+    sleep(3)
+    # 获取 cookies
+    cookies = driver.get_cookies()
+
+    # 查找 SESSDATA cookie
+    for cookie in cookies:
+        if cookie["name"] == "SESSDATA":
+            sessdata = cookie["value"]
+            print(cookie["name"] + ": ", sessdata)
+
+    sleep(100000)
