@@ -37,7 +37,7 @@ yutto-uiya/
 ```
 ## 如何部署它:
 
-你需要`ffmpeg`，我正在研究如何为`windows`用户指定相对路径里的`ffmpeg`。<br>
+你需要`ffmpeg`，我正在研究如何为`windows`用户指定相对路径里的`ffmpeg`。或者在每次使用的时候`export`本地的`ffmpeg`到环境变量。<br>
 
 对于`mac/linux`用户:<br>
 
@@ -59,6 +59,23 @@ pip install -r requirements.txt
 python webui.py
 ```
 
+## 一些配置:
+
+参见`./configs/`:<br>
+
+- `args.yaml`: 基础参数配置文件，`download_dir`用于指定下载的目标路径，`sess_data`用于伪装用户登陆信息。<br>
+- `chrome.yaml`: 配置`chrome-driver`来获取`sess_data`,如果你可以手动获取`sess_data`，那么这个文件可以不用配置。<br>
+
 ## 如何使用:
 
-我为每个功能都在`webui`中写了说明，放心食用~
+`sess_data`的获取:<br>
+
+你可以先下载`chrome-driver`和`chrome`然后根据你的路径配置`./configs/chrome.yaml`，然后运行:<br>
+
+```shell
+python webrowser_config.py
+```
+
+第一次打开后需要在打开的`chrome`页面中登陆你的`bilibili`账号，然后关闭页面，再次运行`webrowser_config.py`。如果读取到有效的`sess_data`，它会为你直接写入配置文件。<br>
+
+我为每个功能都在`webui`中写了说明，放心食用~<br>
