@@ -83,6 +83,17 @@ vip_strict: false # 仅当SESSDATA不为空时生效，严格校验大会员，
 
 - `chrome.yaml`: 配置`chrome-driver`来获取`sess_data`,如果你可以手动获取`sess_data`，那么这个文件可以不用配置。<br>
 
+```yaml
+chrome_driver: './chromedriver-linux64/chromedriver' # chrome-driver 路径
+chrome: './chrome-linux64/chrome' # chrome 路径
+
+# 如果你还没有使用过它们，你可以到这里下载你系统对应的版本:
+# https://googlechromelabs.github.io/chrome-for-testing/#stable
+# 然后解压，指定正确路径即可
+
+target_url: 'https://www.bilibili.com/'
+```
+
 ## 如何使用:
 
 ### 下载更高的清晰度或者大会员视频(你需要SESSDATA)
