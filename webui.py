@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import os
+from pathlib import Path
 import gradio as gr
 
 from entries import (
@@ -10,6 +12,28 @@ from entries import (
     entry_user_single,
     quality_choice,
 )
+
+import subprocess
+
+# 执行 ffmpeg -version 命令来检查 ffmpeg 是否可以被访问
+try:
+    result = subprocess.run(
+        ['yutto', '-v'],  # ffmpeg 的版本命令
+        capture_output=True,     # 捕获标准输出和标准错误
+        text=True,               # 将输出以文本形式处理，而不是字节流
+        check=True               # 如果命令返回非零退出状态码，则抛出异常
+    )
+
+    print("yutto is accessible. Version info:")
+    print(result.stdout)  # 打印输出内容
+
+except subprocess.CalledProcessError as e:
+    print("yutto is not accessible or an error occurred:")
+    print(e.stderr)  # 打印错误输出
+
+except FileNotFoundError:
+    print("yutto is not installed or not found in the system's PATH.")
+
 
 # 主界面布局
 with gr.Blocks() as demo:
@@ -233,4 +257,4 @@ with gr.Blocks() as demo:
         """
         )
 # 启动 Gradio 应用
-demo.launch()
+demo.launch(share=True)
