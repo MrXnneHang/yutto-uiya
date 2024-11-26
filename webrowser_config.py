@@ -56,6 +56,7 @@ if __name__ == "__main__":
     cookies = driver.get_cookies()
 
     # 查找 SESSDATA cookie
+    sessdata = ""
     for cookie in cookies:
         if cookie["name"] == "SESSDATA":
             sessdata = cookie["value"]
