@@ -10,7 +10,6 @@ from yutto import (
 )
 
 config = load_config("./configs/args.yaml")
-SESS_DATA = config["SESSDATA"]
 args = generate_basic_args()
 
 quality_choice = [
@@ -41,7 +40,7 @@ def entry_user_mul(url: str, num_str: str, quality_choice: str) -> str:
     args.extend(extra_args)
     try:
         # 假设返回的结果是处理后的文本
-        result = user_multi_video(url=url, args=args, p=num_str, SESSDATA=SESS_DATA)
+        result = user_multi_video(url=url, args=args, p=num_str)
         return f"{result}"
     except Exception as e:
         # 捕获任何错误并返回失败信息
@@ -53,7 +52,7 @@ def entry_user_single(url: str, quality_choice: str) -> str:
     args.extend(extra_args)
     try:
         # 假设返回的结果是处理后的文本
-        result = user_single_video(url=url, args=args, SESSDATA=SESS_DATA)
+        result = user_single_video(url=url, args=args)
         return f"{result}"
     except Exception as e:
         # 捕获任何错误并返回失败信息
@@ -65,7 +64,7 @@ def entry_favor_single_list(url: str, quality_choice: str) -> str:
     args.extend(extra_args)
     try:
         # 假设返回的结果是处理后的文本
-        result = user_single_favor_list(url=url, args=args, SESSDATA=SESS_DATA)
+        result = user_single_favor_list(url=url, args=args)
         return f"{result}"
     except Exception as e:
         # 捕获任何错误并返回失败信息
@@ -77,7 +76,7 @@ def entry_collection(url: str, quality_choice: str) -> str:
     args.extend(extra_args)
     try:
         # 假设返回的结果是处理后的文本
-        result = user_collection_video(url=url, args=args, SESSDATA=SESS_DATA)
+        result = user_collection_video(url=url, args=args)
         return f"{result}"
     except Exception as e:
         # 捕获任何错误并返回失败信息
@@ -91,7 +90,7 @@ def entry_bangumi(url: str, p: str, quality_choice: str):
     args.extend(extra_args)
     try:
         # 假设返回的结果是处理后的文本
-        result = bangumi_single_season(url=url, args=args, p=p, SESSDATA=SESS_DATA)
+        result = bangumi_single_season(url=url, args=args, p=p)
         return f"{result}"
     except Exception as e:
         # 捕获任何错误并返回失败信息
