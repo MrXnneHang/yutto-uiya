@@ -1,1 +1,1 @@
-D:\miniconda\envs\bilibili\python.exe webrowser_config.py
+.\env\python.exe webrowser_config.py

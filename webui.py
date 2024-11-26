@@ -18,6 +18,25 @@ from entries import (
 # 执行 ffmpeg -version 命令来检查 ffmpeg 是否可以被访问
 try:
     result = subprocess.run(
+        ["ffmpeg", "-version"],  # ffmpeg 的版本命令
+        capture_output=True,  # 捕获标准输出和标准错误
+        text=True,  # 将输出以文本形式处理，而不是字节流
+        check=True,  # 如果命令返回非零退出状态码，则抛出异常
+    )
+
+    print("ffmpeg is accessible. Version info:")
+    print(result.stdout)  # 打印输出内容
+
+except subprocess.CalledProcessError as e:
+    print("ffmpeg is not accessible or an error occurred:")
+    print(e.stderr)  # 打印错误输出
+
+except FileNotFoundError:
+    print("ffmpeg is not installed or not found in the system's PATH.")
+
+# 执行 yutto -v 命令来检查 yutto 是否可以被访问
+try:
+    result = subprocess.run(
         ["yutto", "-v"],  # ffmpeg 的版本命令
         capture_output=True,  # 捕获标准输出和标准错误
         text=True,  # 将输出以文本形式处理，而不是字节流
@@ -233,6 +252,9 @@ with gr.Blocks() as demo:
         如果你是大会员，你还有应该保证设置`args.yaml`中的`vip_strict`和`login_strict`同时为true,否则容易被当作普通用户。<br>
         如果你是普通用户，你应该保证`login_strict`为true,`vip_strict`为false.否则会因为大会员校验失败而无法下载视频。<br>
         如果填写了`SESS_DATA`那么总是应该保证`login_strict`为true,它会校验你的`SESS_DATA`是否有效。<br>
+        ### 3.有时候点击了下载按钮，看到 gradio 中开始转了，但是终端中依然没有响应。
+        如果你在用代理，可以关掉试试。<br>
+        另外，`webui.py`中，如果设置了`demo.launch(share=True)`,也可能导致这个结果。<br>
 
         ## 我应该在哪里反映我碰到的相关问题？
         你应该首先查阅该页面，然后查看终端的信息看自己是否能够解决。如果依然不能解决，那么请到:<br>
@@ -257,4 +279,4 @@ with gr.Blocks() as demo:
         """
         )
 # 启动 Gradio 应用
-demo.launch(share=True)
+demo.launch()

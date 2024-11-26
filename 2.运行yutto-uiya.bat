@@ -25,7 +25,7 @@ set PATH=%YUTTO_DIR%;%PATH%
 set PATH=%FFMPEG_DIR%;%PATH%
 
 :: 启动 Python 脚本
-D:\miniconda\envs\bilibili\python.exe webui.py
+.\env\python.exe webui.py
 
 pause
 
