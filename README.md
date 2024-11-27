@@ -50,6 +50,7 @@ sudo apt install ffmpeg # linux
 
 ```shell
 python >=3.9
+pip install yutto
 pip install -r requirements.txt
 ```
 
@@ -58,7 +59,9 @@ pip install -r requirements.txt
 ```shell
 python webui.py
 ```
-
+## 预览：
+![alt text](https://fastly.jsdelivr.net/gh/MrXnneHang/blog_img/BlogHosting/img/24/11/202411271939674.png)
+![alt text](https://fastly.jsdelivr.net/gh/MrXnneHang/blog_img/BlogHosting/img/24/11/202411271939914.png)
 ## 一些配置:
 
 参见[`./configs/`](https://github.com/MrXnneHang/yutto-uiya/tree/gradio-webui/configs):<br>
