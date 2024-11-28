@@ -1,56 +1,35 @@
 from __future__ import annotations
 
-import json
 from time import sleep
 
-import yaml
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 
-from utils.config import load_config, write_config
+from utils.config import load_config
 
 
-class Wish:
+class ChromeDriverConfig:
     def __init__(self):
-        self.config = load_config("./configs/chrome.yaml")
+        self.args: dict[str, str] = load_config("./configs/chrome.yaml")
         self.option = webdriver.ChromeOptions()
         self.option.add_argument(r"user-data-dir=./User Data")  # 浏览器路径
 
         # 指定Chrome和ChromeDriver的路径
-        self.chrome_path = self.config["chrome"]
-        self.chrome_driver_path = self.config["chrome_driver"]
+        self.chrome_path = self.args["chrome"]
+        self.chrome_driver_path = self.args["chrome_driver"]
         self.option.binary_location = self.chrome_path
 
         # 使用Service指定ChromeDriver的路径
         self.service = Service(self.chrome_driver_path)
 
-    def get_data(self):
-        """初始化WebDriver并获取cookies"""
-        option = webdriver.ChromeOptions()
-        option.add_argument(r"./User Data")  # 浏览器路径
-
-        # 指定Chrome和ChromeDriver的路径
-        chrome_path = self.config["chrome"]
-        chrome_driver_path = self.config["chrome_driver"]
-        option.binary_location = chrome_path
-
-        # 使用Service指定ChromeDriver的路径
-        service = Service(chrome_driver_path)
-
-        # 初始化driver
-        driver = webdriver.Chrome(service=service, options=option)
-        driver.get(self.config["target_url"])
-        sleep(5)  # 等待页面加载
-
-    def run(self):
-        self.get_data()
-
 
 if __name__ == "__main__":
-    fps = Wish()
+    chrome_config = ChromeDriverConfig()
     # 初始化driver
-    driver = webdriver.Chrome(service=fps.service, options=fps.option)
-    driver.get(fps.config["target_url"])
+    driver = webdriver.Chrome(
+        service=chrome_config.service, options=chrome_config.option
+    )
+    driver.get(chrome_config.args["target_url"])
     sleep(3)
     # 获取 cookies
     cookies = driver.get_cookies()

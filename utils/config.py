@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import os
 from pathlib import Path
 
 import yaml
@@ -8,7 +7,7 @@ import yaml
 # 读取配置文件
 
 
-def load_config(path: str) -> dict:
+def load_config(path: str) -> dict[str, str]:
     """读取配置文件到字典"""
 
     try:
@@ -20,14 +19,14 @@ def load_config(path: str) -> dict:
         return {}
 
 
-def write_config(path: str, data: dict) -> None:
+def write_config(path: str, data: dict[str, str]) -> None:
     """写入配置文件"""
     with Path(path).open("w", encoding="utf-8") as f:
         yaml.dump(data, f)
     print(f"配置文件 {path} 写入成功")
 
 
-def generate_basic_args() -> str:
+def generate_basic_args() -> list[str]:
     """根据args.yaml生成基础参数"""
     config = load_config("./configs/args.yaml")
     args = ["-d", config["download_dir"]]
