@@ -209,6 +209,9 @@ with gr.Blocks() as demo:
         如果你是大会员，你还有应该保证设置`args.yaml`中的`vip_strict`和`login_strict`同时为true,否则容易被当作普通用户。<br>
         如果你是普通用户，你应该保证`login_strict`为true,`vip_strict`为false.否则会因为大会员校验失败而无法下载视频。<br>
         如果填写了`SESS_DATA`那么总是应该保证`login_strict`为true,它会校验你的`SESS_DATA`是否有效。<br>
+        ### 3.yutto is not accessible
+        ![](https://image.baidu.com/search/down?url=http://i0.hdslb.com/bfs/new_dyn/886152ec5fbbe3baf74e836960215c5360547448.png)
+        参见视频:[yutto is not accessible 解决方法 | yutto-uiya v1.0.1](https://www.bilibili.com/video/BV1c1zqYLEAE/)<br>
 
         ## 我应该在哪里反映我碰到的相关问题？
         你应该首先查阅该页面，然后查看终端的信息看自己是否能够解决。如果依然不能解决，那么请到:<br>
