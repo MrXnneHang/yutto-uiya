@@ -26,9 +26,7 @@ class ChromeDriverConfig:
 if __name__ == "__main__":
     chrome_config = ChromeDriverConfig()
     # 初始化driver
-    driver = webdriver.Chrome(
-        service=chrome_config.service, options=chrome_config.option
-    )
+    driver = webdriver.Chrome(service=chrome_config.service, options=chrome_config.option)
     driver.get(chrome_config.args["target_url"])
     sleep(3)
     # 获取 cookies
@@ -42,9 +40,7 @@ if __name__ == "__main__":
             print(cookie["name"] + ": ", sessdata)
 
     if sessdata:
-        print(
-            "复制你的SESSDATA，然后填写到./configs/args.yaml的SESSDATA中,写在双引号中"
-        )
+        print("复制你的SESSDATA，然后填写到./configs/args.yaml的SESSDATA中,写在双引号中")
     else:
         print("第一次打开浏览器，需要先登陆bilibili账号，然后再次运行程序")
     print("可以关闭该窗口了....")

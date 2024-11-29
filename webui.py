@@ -46,9 +46,7 @@ with gr.Blocks() as demo:
             output = gr.Textbox(label="Download Result", interactive=False)
 
             # 将按钮与数据处理函数连接
-            download_button.click(
-                entry_user_single, inputs=[url_input, quality_input], outputs=output
-            )
+            download_button.click(entry_user_single, inputs=[url_input, quality_input], outputs=output)
 
         with gr.Tab("视频列表（多个视频）"):
             # 添加说明文本区域
@@ -124,9 +122,7 @@ with gr.Blocks() as demo:
         output = gr.Textbox(label="Download Result", interactive=False)
 
         # 将按钮与数据处理函数连接
-        download_button.click(
-            entry_favor_single_list, inputs=[url_input, quality_input], outputs=output
-        )
+        download_button.click(entry_favor_single_list, inputs=[url_input, quality_input], outputs=output)
     with gr.Tab("合集"):
         gr.Markdown(
             """
@@ -157,9 +153,7 @@ with gr.Blocks() as demo:
         output = gr.Textbox(label="Download Result", interactive=False)
 
         # 将按钮与数据处理函数连接
-        download_button.click(
-            entry_collection, inputs=[url_input, quality_input], outputs=output
-        )
+        download_button.click(entry_collection, inputs=[url_input, quality_input], outputs=output)
     with gr.Tab("番剧"):
         gr.Markdown(
             """
@@ -179,9 +173,7 @@ with gr.Blocks() as demo:
         )
         # 输入框
         url_input = gr.Textbox(label="URL (Enter URL)")
-        num_input = gr.Textbox(
-            label="PART (Enter Number like 1,2,3 or 1~3 or 1~-1)", value="1~-1"
-        )
+        num_input = gr.Textbox(label="PART (Enter Number like 1,2,3 or 1~3 or 1~-1)", value="1~-1")
         quality_input = gr.Dropdown(
             choices=quality_choice,
             value=quality_choice[4],
@@ -195,9 +187,7 @@ with gr.Blocks() as demo:
         output = gr.Textbox(label="Download Result", interactive=False)
 
         # 将按钮与数据处理函数连接
-        download_button.click(
-            entry_bangumi, inputs=[url_input, num_input, quality_input], outputs=output
-        )
+        download_button.click(entry_bangumi, inputs=[url_input, num_input, quality_input], outputs=output)
     with gr.Tab("常见问题"):
         gr.Markdown(
             """
