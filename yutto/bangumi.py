@@ -6,7 +6,7 @@ from utils.subproc import run_command
 # TODO: 似乎只支持-b,并且并不能直接获取url对应的那一话
 # 下载单个番剧的指定一集
 # 示例: https://www.bilibili.com/bangumi/play/ss48811
-def bangumi_single_episode(url: str, args: list = None):
+def bangumi_single_episode(url: str, args: list[str] = None) -> int:
     """
     下载单个番剧的指定一集
     :param url: 指定集数的番剧链接
