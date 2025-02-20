@@ -33,8 +33,11 @@ src/yutto-uiya/
 │
 ├── configs/ # ffmpeg 等等配置文件我们会尝试放在这里.
 │ └──  args.yaml # 和 yutto 相关的配置。 
+│
 └── __main__.py # 这个是我们的 webui 入口文件
+│
 └──  api.py # 封装好的各个交互事件
+│
 └──  _typing.py # 记录一些数据结构以及变量含义
 
 ```
@@ -66,7 +69,7 @@ cd src/yutto-uiya
 python __main__.py
 ```
 ## 预览：
-![image-20250220195748641](/home/xnne/.config/Typora/typora-user-images/image-20250220195748641.png)
+![image-20250220195748641](https://fastly.jsdelivr.net/gh/MrXnneHang/blog_img/BlogHosting/img/25/02/202502202049967.png)
 ![alt text](https://fastly.jsdelivr.net/gh/MrXnneHang/blog_img/BlogHosting/img/24/11/202411271939914.png)
 
 ## 一些配置:
