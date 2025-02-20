@@ -11,3 +11,9 @@ repos:
       - id: typos
         files: \.(py|md)$ # 同时检查 .py 和 .md 文件
         args: []
+
+  # black
+  - repo: https://github.com/psf/black-pre-commit-mirror
+    rev: 24.8.0
+    hooks:
+    -   id: black
