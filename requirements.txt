@@ -1,7 +1,0 @@
-# selenium
-# webdriver_manager
-# bs4
-pyaml==25.1.0
-# lxml
-gradio==5.16.1
-# yutto==2.0.1
