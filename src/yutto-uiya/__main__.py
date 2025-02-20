@@ -2,10 +2,16 @@ from __future__ import annotations
 
 import gradio as gr
 from _typing import AudioQuality, VideoQuality
-from api import entry_bangumi, entry_collection, entry_favorlist, entry_user_video, entry_user_video_list
+from api import (
+    entry_bangumi,
+    entry_collection,
+    entry_favorlist,
+    entry_user_video,
+    entry_user_video_list,
+)
 
-video_quality_choice = list(VideoQuality.__args__) # type: ignore
-audio_quality_choice = list(AudioQuality.__args__) # type: ignore
+video_quality_choice = list(VideoQuality.__args__)  # type: ignore
+audio_quality_choice = list(AudioQuality.__args__)  # type: ignore
 
 # 主界面布局
 with gr.Blocks() as demo:
@@ -24,6 +30,7 @@ with gr.Blocks() as demo:
             - 清晰度:如果不存在指定的清晰度或者该清晰度不具有访问权限，那么会降低清晰度进行下载，更高清晰度需要大会员。大会员需要填写`configs/args.yaml`中的SESS_DATA并且用户自身具有大会员权限。
             点击按钮触发下载。
             - 音频质量: 同清晰度。不用多说了哈。
+            - Debug Mode: 如果碰到Bug,可以开启Debug Mode,然后截图终端的信息以及结果框反馈给我。
 
             点击下载开始下载哈～欢迎自由尝试并且反馈 bug.
             """
@@ -31,21 +38,24 @@ with gr.Blocks() as demo:
             # url
             url = gr.Textbox(label="URL (视频网址，详细见参考链接)")
 
-            # 资源选择 , checkbox, video, audio, danmaku
-            require_video = gr.Checkbox(label="画面", value=True)
-            reuiqre_audio = gr.Checkbox(label="音频", value=True)
-            reuiqre_danmaku = gr.Checkbox(label="弹幕", value=False)
+            with gr.Row():
+                # 资源选择 , checkbox, video, audio, danmaku
+                require_video = gr.Checkbox(label="画面", value=True)
+                reuiqre_audio = gr.Checkbox(label="音频", value=True)
+                reuiqre_danmaku = gr.Checkbox(label="弹幕", value=False)
+
+            debug_mode = gr.Checkbox(label="Debug Mode", value=False)
 
             # 下载质量
             video_quality = gr.Dropdown(
-                choices=video_quality_choice, # type: ignore
-                value=video_quality_choice[4], # type: ignore
+                choices=video_quality_choice,  # type: ignore
+                value=video_quality_choice[4],  # type: ignore
                 label="Quality",
                 info="选择你想要的清晰度(视频具有该资源并且你有访问权限,否则自动降级)",  # 默认选择 "1080p 高清"
             )
             audio_quality = gr.Dropdown(
-                choices=audio_quality_choice, # type: ignore
-                value=audio_quality_choice[2], # type: ignore
+                choices=audio_quality_choice,  # type: ignore
+                value=audio_quality_choice[2],  # type: ignore
                 label="Audio Quality",
                 info="选择你想要的音频质量(视频具有该资源并且你有访问权限,否则自动降级)",  # 默认选择 "320kbps 高品质"
             )
@@ -54,12 +64,19 @@ with gr.Blocks() as demo:
 
             output = gr.Textbox(label="结果", interactive=False)
 
-            download_button.click(entry_user_video, inputs=[url,
-                                                            require_video,
-                                                            reuiqre_audio,
-                                                            reuiqre_danmaku,
-                                                            video_quality,
-                                                            audio_quality], outputs=output)
+            download_button.click(
+                entry_user_video,
+                inputs=[
+                    url,
+                    require_video,
+                    reuiqre_audio,
+                    reuiqre_danmaku,
+                    video_quality,
+                    audio_quality,
+                    debug_mode,
+                ],
+                outputs=output,
+            )
 
         with gr.Tab("视频列表（多个视频）"):
             # 添加说明文本区域
@@ -75,6 +92,7 @@ with gr.Blocks() as demo:
             - 资源选择： 参见用户视频-单个视频的说明。
             - 清晰度： 参见用户视频-单个视频的说明。
             - 音频质量： 参见用户视频-单个视频的说明。
+            - Debug Mode: 如果碰到Bug,可以开启Debug Mode,然后重复运行复现问题最后截图终端的信息以及结果框反馈给我。
 
             点击按钮触发下载。
             """
@@ -89,21 +107,25 @@ with gr.Blocks() as demo:
                 value="1~-1",
             )
 
-            # 资源选择
-            require_video = gr.Checkbox(label="画面", value=True)
-            reuiqre_audio = gr.Checkbox(label="音频", value=True)
-            reuiqre_danmaku = gr.Checkbox(label="弹幕", value=False)
+            # 资源选择, 排成一行
+            with gr.Row():
+                require_video = gr.Checkbox(label="画面", value=True)
+                reuiqre_audio = gr.Checkbox(label="音频", value=True)
+                reuiqre_danmaku = gr.Checkbox(label="弹幕", value=False)
+
+            # debug模式
+            debug_mode = gr.Checkbox(label="Debug Mode", value=False)
 
             # 下拉菜单选择质量
             video_quality = gr.Dropdown(
-                choices=video_quality_choice, # type: ignore
-                value=video_quality_choice[4], # type: ignore
+                choices=video_quality_choice,  # type: ignore
+                value=video_quality_choice[4],  # type: ignore
                 label="Quality",
                 info="选择你想要的清晰度(视频具有该资源并且你有访问权限,否则自动降级)",  # 默认选择 "1080p 高清"
             )
             audio_quality = gr.Dropdown(
-                choices=audio_quality_choice, # type: ignore
-                value=audio_quality_choice[2], # type: ignore
+                choices=audio_quality_choice,  # type: ignore
+                value=audio_quality_choice[2],  # type: ignore
                 label="Audio Quality",
                 info="选择你想要的音频质量(视频具有该资源并且你有访问权限,否则自动降级)",  # 默认选择 "320kbps 高品质"
             )
@@ -117,13 +139,22 @@ with gr.Blocks() as demo:
             # 将按钮与数据处理函数连接
             download_button.click(
                 entry_user_video_list,
-                inputs=[url, select_p, require_video, reuiqre_audio, reuiqre_danmaku, video_quality, audio_quality],
+                inputs=[
+                    url,
+                    select_p,
+                    require_video,
+                    reuiqre_audio,
+                    reuiqre_danmaku,
+                    video_quality,
+                    audio_quality,
+                    debug_mode,
+                ],
                 outputs=output,
             )
 
     with gr.Tab("收藏夹"):
         gr.Markdown(
-        """
+            """
         ## 对用户整个收藏夹下载：(不支持默认收藏夹，不建议尝试)
         示例链接🔗:
         - [https://space.bilibili.com/100969474/favlist?fid=1306978874&ftype=create](https://space.bilibili.com/100969474/favlist?fid=1306978874&ftype=create)
@@ -133,6 +164,7 @@ with gr.Blocks() as demo:
         - 资源选择： 参见用户视频-单个视频的说明。
         - 清晰度： 参见用户视频-单个视频的说明。
         - 音频质量： 参见用户视频-单个视频的说明。
+        - Debug Mode: 如果碰到Bug,可以开启Debug Mode,然后重复运行复现问题最后截图终端的信息以及结果框反馈给我。
 
         点击按钮触发下载。
         """
@@ -141,20 +173,23 @@ with gr.Blocks() as demo:
         url = gr.Textbox(label="URL (视频网址,详细见参考链接)")
 
         # 资源选项
-        require_video = gr.Checkbox(label="画面", value=True)
-        reuiqre_audio = gr.Checkbox(label="音频", value=True)
-        reuiqre_danmaku = gr.Checkbox(label="弹幕", value=False)
+        with gr.Row():
+            require_video = gr.Checkbox(label="画面", value=True)
+            reuiqre_audio = gr.Checkbox(label="音频", value=True)
+            reuiqre_danmaku = gr.Checkbox(label="弹幕", value=False)
+
+        debug_mode = gr.Checkbox(label="Debug Mode", value=False)
 
         # 质量
         video_quality = gr.Dropdown(
-            choices=video_quality_choice, # type: ignore
-            value=video_quality_choice[4], # type: ignore
+            choices=video_quality_choice,  # type: ignore
+            value=video_quality_choice[4],  # type: ignore
             label="Quality",
             info="选择你想要的清晰度(视频具有该资源并且你有访问权限,否则自动降级)",  # 默认选择 "1080p 高清"
         )
         audio_quality = gr.Dropdown(
-            choices=audio_quality_choice, # type: ignore
-            value=audio_quality_choice[2], # type: ignore
+            choices=audio_quality_choice,  # type: ignore
+            value=audio_quality_choice[2],  # type: ignore
             label="Audio Quality",
             info="选择你想要的音频质量(视频具有该资源并且你有访问权限,否则自动降级)",  # 默认选择 "320kbps 高品质"
         )
@@ -166,7 +201,19 @@ with gr.Blocks() as demo:
         output = gr.Textbox(label="结果", interactive=False)
 
         # 将按钮与数据处理函数连接
-        download_button.click(entry_favorlist, inputs=[url,reuiqre_audio,require_video,reuiqre_danmaku,video_quality,audio_quality], outputs=output)
+        download_button.click(
+            entry_favorlist,
+            inputs=[
+                url,
+                reuiqre_audio,
+                require_video,
+                reuiqre_danmaku,
+                video_quality,
+                audio_quality,
+                debug_mode,
+            ],
+            outputs=output,
+        )
     with gr.Tab("合集"):
         gr.Markdown(
             """
@@ -179,6 +226,7 @@ with gr.Blocks() as demo:
         - 资源选择： 参见用户视频-单个视频的说明。
         - 清晰度： 参见用户视频-单个视频的说明。
         - 音频质量： 参见用户视频-单个视频的说明。
+        - Debug Mode: 如果碰到Bug,可以开启Debug Mode,然后重复运行复现问题最后截图终端的信息以及结果框反馈给我。
 
         点击按钮触发下载。
             """
@@ -187,26 +235,41 @@ with gr.Blocks() as demo:
         url = gr.Textbox(label="URL (视频网址,详细见参考链接)")
 
         # 资源选项
-        require_video = gr.Checkbox(label="画面", value=True)
-        require_audio = gr.Checkbox(label="音频", value=True)
-        require_danmaku = gr.Checkbox(label="弹幕", value=False)
+        with gr.Row():
+            require_video = gr.Checkbox(label="画面", value=True)
+            require_audio = gr.Checkbox(label="音频", value=True)
+            require_danmaku = gr.Checkbox(label="弹幕", value=False)
+
+        debug_mode = gr.Checkbox(label="Debug Mode", value=False)
 
         # 质量
         video_quality = gr.Dropdown(
-            choices=video_quality_choice, # type: ignore
-            value=video_quality_choice[4], # type: ignore
+            choices=video_quality_choice,  # type: ignore
+            value=video_quality_choice[4],  # type: ignore
             label="Quality",
             info="选择你想要的清晰度(视频具有该资源并且你有访问权限,否则自动降级)",  # 默认选择 "1080p 高清"
         )
         audio_quality = gr.Dropdown(
-            choices=audio_quality_choice, # type: ignore
-            value=audio_quality_choice[2], # type: ignore
+            choices=audio_quality_choice,  # type: ignore
+            value=audio_quality_choice[2],  # type: ignore
             label="Audio Quality",
             info="选择你想要的音频质量(视频具有该资源并且你有访问权限,否则自动降级)",  # 默认选择 "320kbps 高品质"
         )
 
         # 将按钮与数据处理函数连接
-        download_button.click(entry_collection, inputs=[url, require_video, require_audio, require_danmaku, video_quality, audio_quality], outputs=output)
+        download_button.click(
+            entry_collection,
+            inputs=[
+                url,
+                require_video,
+                require_audio,
+                require_danmaku,
+                video_quality,
+                audio_quality,
+                debug_mode,
+            ],
+            outputs=output,
+        )
 
         # 输出框来显示处理结果（如成功或错误信息）
         output = gr.Textbox(label="结果", interactive=False)
@@ -225,6 +288,7 @@ with gr.Blocks() as demo:
         - 清晰度:如果不存在指定的清晰度或者该清晰度不具有访问权限，那么会降低清晰度进行下载，更高清晰度需要大会员。大会员需要填写`configs/args.yaml`中的SESS_DATA并且用户自身具有大会员权限。
         点击按钮触发下载。
         - 音频质量: 同清晰度。不用多说了哈。
+        - Debug Mode: 如果碰到Bug,可以开启Debug Mode,然后重复运行复现问题最后截图终端的信息以及结果框反馈给我。
 
         点击按钮触发下载。
         """
@@ -234,25 +298,28 @@ with gr.Blocks() as demo:
 
         # 选集
         select_p = gr.Textbox(
-                label="选集 (输入比如这样的,1,2,3 or 1~3 or 1~-1,注意英文逗号分隔)",
-                value="1~-1",
-            )
+            label="选集 (输入比如这样的,1,2,3 or 1~3 or 1~-1,注意英文逗号分隔)",
+            value="1~-1",
+        )
 
         # 资源
-        require_video = gr.Checkbox(label="画面", value=True)
-        require_audio = gr.Checkbox(label="音频", value=True)
-        require_danmaku = gr.Checkbox(label="弹幕", value=False)
+        with gr.Row():
+            require_video = gr.Checkbox(label="画面", value=True)
+            require_audio = gr.Checkbox(label="音频", value=True)
+            require_danmaku = gr.Checkbox(label="弹幕", value=False)
+
+        debug_mode = gr.Checkbox(label="Debug Mode", value=False)
 
         # 质量
         video_quality = gr.Dropdown(
-            choices=video_quality_choice, # type: ignore
-            value=video_quality_choice[4], # type: ignore
+            choices=video_quality_choice,  # type: ignore
+            value=video_quality_choice[4],  # type: ignore
             label="Quality",
             info="选择你想要的清晰度(视频具有该资源并且你有访问权限,否则自动降级)",  # 默认选择 "1080p 高清"
         )
         audio_quality = gr.Dropdown(
-            choices=audio_quality_choice, # type: ignore
-            value=audio_quality_choice[2], # type: ignore
+            choices=audio_quality_choice,  # type: ignore
+            value=audio_quality_choice[2],  # type: ignore
             label="Audio Quality",
             info="选择你想要的音频质量(视频具有该资源并且你有访问权限,否则自动降级)",  # 默认选择 "320kbps 高品质"
         )
@@ -264,7 +331,20 @@ with gr.Blocks() as demo:
         output = gr.Textbox(label="结果", interactive=False)
 
         # 将按钮与数据处理函数连接
-        download_button.click(entry_bangumi, inputs=[url, select_p, require_video, require_audio, require_danmaku, video_quality, audio_quality], outputs=output)
+        download_button.click(
+            entry_bangumi,
+            inputs=[
+                url,
+                select_p,
+                require_video,
+                require_audio,
+                require_danmaku,
+                video_quality,
+                audio_quality,
+                debug_mode,
+            ],
+            outputs=output,
+        )
 
     with gr.Tab("常见问题"):
         gr.Markdown(
@@ -303,7 +383,6 @@ with gr.Blocks() as demo:
         ![](https://image.baidu.com/search/down?url=https://img3.doubanio.com/view/photo/m/public/p2915590863.webp)
         """
         )
-
 
 
 if __name__ == "__main__":
