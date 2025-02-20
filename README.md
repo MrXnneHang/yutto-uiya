@@ -24,7 +24,7 @@
 ## 暂定的目录结构:
 
 ```css
-yutto-uiya/
+src/yutto-uiya/
 │
 ├── yutto/ # 把yutto shell指令使用python调用，形成最小模块
 │   └── __init__.py
@@ -32,8 +32,11 @@ yutto-uiya/
 ├── utils/ # 这里是我们的工具包,只依赖于python标准库，以及一些第三方库，不依赖我们自己写的代码
 │
 ├── configs/ # ffmpeg 等等配置文件我们会尝试放在这里.
-│
-└── webui.py # 这个是我们的 webui 入口文件
+│ └──  args.yaml # 和 yutto 相关的配置。 
+└── __main__.py # 这个是我们的 webui 入口文件
+└──  api.py # 封装好的各个交互事件
+└──  _typing.py # 记录一些数据结构以及变量含义
+
 ```
 ## 如何部署它:
 
@@ -49,19 +52,23 @@ sudo apt install ffmpeg # linux
 然后配置`python`环境:<br>
 
 ```shell
-python >=3.9
-pip install yutto
+# python >=3.9
+git clone https://github.com/MrXnneHang/yutto-uiya.git
+cd yutto-uiya/
+pip install pip install git+https://github.com/MrXnneHang/yutto.git@depndency-adjust # 因为 yutto 2.0.1 在 aiofiles 的依赖上和 gradio 有冲突，但又没有代码冲突，所以我手动调整了一下依赖版本
 pip install -r requirements.txt
 ```
 
-启动:<br>
+## 启动:<br>
 
 ```shell
-python webui.py
+cd src/yutto-uiya
+python __main__.py
 ```
 ## 预览：
-![alt text](https://fastly.jsdelivr.net/gh/MrXnneHang/blog_img/BlogHosting/img/24/11/202411271939674.png)
+![image-20250220195748641](/home/xnne/.config/Typora/typora-user-images/image-20250220195748641.png)
 ![alt text](https://fastly.jsdelivr.net/gh/MrXnneHang/blog_img/BlogHosting/img/24/11/202411271939914.png)
+
 ## 一些配置:
 
 参见[`./configs/`](https://github.com/MrXnneHang/yutto-uiya/tree/gradio-webui/configs):<br>
@@ -84,7 +91,19 @@ vip_strict: false # 仅当SESSDATA不为空时生效，严格校验大会员，
 
 ```
 
-- `chrome.yaml`: 配置`chrome-driver`来获取`sess_data`,如果你可以手动获取`sess_data`，那么这个文件可以不用配置。<br>
+## 如何使用:
+
+### 下载更高的清晰度或者大会员视频(你需要SESSDATA)
+
+`sess_data`的获取:<br>
+
+![image-20250220200623220](https://fastly.jsdelivr.net/gh/MrXnneHang/blog_img/BlogHosting/img/25/02/202502202006049.png)
+
+你可以参考 [yutto 文档](https://yutto.nyakku.moe/guide/cli/basic)中提到的方法进行获取。或者使用我的脚本。<br>
+
+你可以先下载`chrome-driver`和`chrome`然后根据你的路径配置`./configs/chrome.yaml`，然后运行:<br>
+
+`chrome.yaml`: 配置`chrome-driver`来获取`sess_data`,如果你可以手动获取`sess_data`，那么这个文件可以不用配置。<br>
 
 ```yaml
 chrome_driver: './chromedriver-linux64/chromedriver' # chrome-driver 路径
@@ -97,19 +116,16 @@ chrome: './chrome-linux64/chrome' # chrome 路径
 target_url: 'https://www.bilibili.com/'
 ```
 
-## 如何使用:
-
-### 下载更高的清晰度或者大会员视频(你需要SESSDATA)
-
-`sess_data`的获取:<br>
-
-你可以先下载`chrome-driver`和`chrome`然后根据你的路径配置`./configs/chrome.yaml`，然后运行:<br>
 
 ```shell
 python webrowser_config.py
 ```
 
-第一次打开后需要在打开的`chrome`页面中登陆你的`bilibili`账号，然后关闭页面，再次运行`webrowser_config.py`。在终端中找到你对应的`SESSDATA`然后写入到`args.yaml`中。<br>
+第一次打开后需要在打开的`chrome`页面中登陆你的`bilibili`账号，然后关闭页面，再次运行可以得到SESS_DATA。在终端中找到你的`SESSDATA`然后写入到`args.yaml`中。<br>
+
+不过看起来似乎更麻烦？<br>
+
+我会在做整合包的时候利用整合包环境直接 sh 或者 bat 脚本。<br>
 
 ### 如何用它下载视频:
 
@@ -117,4 +133,7 @@ python webrowser_config.py
 
 ## 待开发:
 
-- [ ] 提供单独下载音频、视频、弹幕的勾选项。放在webui中。
+- [x] 提供单独下载音频、视频、弹幕、封面的勾选项。放在webui中。
+- [ ] 结合 nfo 显示部分视频信息。
+- [ ] 提供手动选集。 
+- [x] Typing，优化代码结构，让代码变得优雅.   
