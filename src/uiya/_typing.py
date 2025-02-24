@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-from typing import Literal, Optional, TypedDict
+from dataclasses import dataclass
+from typing import Literal, TypedDict
 
 from utils.config import load_config
 
@@ -61,6 +61,7 @@ class CommandStatus(TypedDict):
     require_video: bool
     require_audio: bool
     require_danmaku: bool
+    require_cover: bool
     debug_mode: bool
     video_quality: VideoQuality
     audio_quality: AudioQuality
@@ -88,6 +89,7 @@ class CommandGenerator:
     require_video: bool = True
     require_audio: bool = True
     require_danmaku: bool = False
+    require_cover: bool = False
     debug_mode: bool = False
     video_quality: VideoQuality = "360p 流畅"
     audio_quality: AudioQuality = "320kbps"
@@ -118,29 +120,148 @@ class CommandGenerator:
             not self.require_video
             and not self.require_audio
             and not self.require_danmaku
+            and not self.require_cover
         ):
             raise ValueError("No resource required")
 
+        # TODO: 指令形式的资源选择很难处理复杂需求，很费脑子，以及可能存在逻辑冲突，应该考虑改用配置_toml来实现。
+        # --danmaku-only , --video-only , --audio-only, 可以下到同一个目录下。
         self.args = []
-        # [x] [] [], video only
-        if self.require_video and not self.require_audio and not self.require_danmaku:
+        # C41 + C42 + C43 + C44 = 4 + 6 + 4 + 1 = 15,这特奶奶的绝对是最愚蠢的写法，但是我实在是想不到更好的办法了。
+        # 1.[x] [] [] [], video only, pass!
+        if (
+            self.require_video
+            and not self.require_audio
+            and not self.require_danmaku
+            and not self.require_cover
+        ):
             self.args = ["yutto", self.url, "--video-only", "--no-danmaku"]
-        # [] [x] [], audio only
-        if not self.require_video and self.require_audio and not self.require_danmaku:
+        # 2.[] [x] [] [], audio only, pass!
+        if (
+            not self.require_video
+            and self.require_audio
+            and not self.require_danmaku
+            and not self.require_cover
+        ):
             self.args = ["yutto", self.url, "--audio-only", "--no-danmaku"]
-        # [] [] [x], danmaku only
-        if not self.require_video and not self.require_audio and self.require_danmaku:
+        # 3.[] [] [x] [], danmaku only, pass!
+        if (
+            not self.require_video
+            and not self.require_audio
+            and self.require_danmaku
+            and not self.require_cover
+        ):
             self.args = ["yutto", self.url, "--danmaku-only"]
-        # [x] [x] [], video with audio, default!
-        if self.require_video and self.require_audio and not self.require_danmaku:
+        # 4.[] [] [] [x], cover only, pass!
+        if (
+            not self.require_video
+            and not self.require_audio
+            and not self.require_danmaku
+            and self.require_cover
+        ):
+            self.args = ["yutto", self.url, "--cover-only"]
+        # 5.[x] [x] [] [], video with audio, default! pass!
+        if (
+            self.require_video
+            and self.require_audio
+            and not self.require_danmaku
+            and not self.require_cover
+        ):
             self.args = ["yutto", self.url, "--no-danmaku"]
-        # [] [x] [x], audio with danmaku
-        if not self.require_video and self.require_audio and self.require_danmaku:
+        # 6.[] [x] [x] [], audio with danmaku, pass!
+        if (
+            not self.require_video
+            and self.require_audio
+            and self.require_danmaku
+            and not self.require_cover
+        ):
             self.args = ["yutto", self.url, "--audio-only"]
-        # [x] [x] [x], video,audio,danmaku
-        if self.require_video and self.require_audio and self.require_danmaku:
+        # 7.[] [] [x] [x], danmaku with cover, failed!
+        # 没有下载封面的情况下是无法保留封面的哦～
+        if (
+            not self.require_video
+            and not self.require_audio
+            and self.require_danmaku
+            and self.require_cover
+        ):
+            self.args = ["yutto", self.url, "--danmaku-only", "--save-cover"]
+        # 8.[x] [] [x] [], video with danmaku,pass!
+        if (
+            self.require_video
+            and not self.require_audio
+            and self.require_danmaku
+            and not self.require_cover
+        ):
+            self.args = ["yutto", self.url, "--video-only"]
+            raise ValueError("目前暂时不支持单独下载封面，得捆绑视频资源才能下载。")
+        # 9.[x] [] [] [x], video with cover, pass!
+        if (
+            self.require_video
+            and not self.require_audio
+            and not self.require_danmaku
+            and self.require_cover
+        ):
+            self.args = [
+                "yutto",
+                self.url,
+                "--video-only",
+                "--save-cover",
+                "--no-danmaku",
+            ]
+        # 10.[] [x] [] [x], audio with cover,pass!
+        if (
+            not self.require_video
+            and self.require_audio
+            and not self.require_danmaku
+            and self.require_cover
+        ):
+            self.args = [
+                "yutto",
+                self.url,
+                "--audio-only",
+                "--save-cover",
+                "--no-danmaku",
+            ]
+        # 11.[x] [x] [x] [], video with audio and danmaku,pass!
+        if (
+            self.require_video
+            and self.require_audio
+            and self.require_danmaku
+            and not self.require_cover
+        ):
             self.args = ["yutto", self.url]
-
+        # 12.[x] [x] [] [x],  video with audio and cover, pass!
+        if (
+            self.require_video
+            and self.require_audio
+            and not self.require_danmaku
+            and self.require_cover
+        ):
+            self.args = ["yutto", self.url, "--no-danmaku", "--save-cover"]
+        # 13.[x] [] [x] [x], video with danmaku and cover, pass!
+        if (
+            self.require_video
+            and not self.require_audio
+            and self.require_danmaku
+            and self.require_cover
+        ):
+            self.args = ["yutto", self.url, "--video-only", "--save-cover"]
+        # 14.[] [x] [x] [x], audio with danmaku and cover, pass!
+        if (
+            not self.require_video
+            and self.require_audio
+            and self.require_danmaku
+            and self.require_cover
+        ):
+            self.args = ["yutto", self.url, "--audio-only", "--save-cover"]
+        # 15.[x] [x] [x] [x], video with audio, danmaku and cover,pass!
+        if (
+            self.require_video
+            and self.require_audio
+            and self.require_danmaku
+            and self.require_cover
+        ):
+            self.args = ["yutto", self.url, "--save-cover"]
         # =================== BATCH DOWNLOAD
         if self.support_select and self.selected_p is not None:
             batch_download_args = ["-b", "-p", self.selected_p]

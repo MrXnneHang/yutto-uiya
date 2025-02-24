@@ -14,6 +14,7 @@ status: CommandStatus = {
     "require_video": True,  # adjustable
     "require_audio": True,  # adjustable
     "require_danmaku": False,  # adjustable
+    "require_cover": False,  # adjustable
     "debug_mode": False,  # adjustable
     "video_quality": "360p 流畅",  # adjustable
     "audio_quality": "320kbps",  # adjustable
@@ -29,6 +30,7 @@ def bangumi_batch_download(
     require_video: bool,
     require_audio: bool,
     require_danmaku: bool,
+    require_cover: bool,
     video_quality: VideoQuality,
     audio_quality: AudioQuality,
     SESS_DATA: str = "",
@@ -56,6 +58,7 @@ def bangumi_batch_download(
     status.update({"require_video": require_video})
     status.update({"require_audio": require_audio})
     status.update({"require_danmaku": require_danmaku})
+    status.update({"require_cover": require_cover})
     status.update({"debug_mode": debug_mode})
     status.update({"video_quality": video_quality})
     status.update({"audio_quality": audio_quality})

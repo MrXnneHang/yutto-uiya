@@ -43,6 +43,7 @@ with gr.Blocks() as demo:
                 require_video = gr.Checkbox(label="画面", value=True)
                 reuiqre_audio = gr.Checkbox(label="音频", value=True)
                 reuiqre_danmaku = gr.Checkbox(label="弹幕", value=False)
+                require_cover = gr.Checkbox(label="封面", value=False)
 
             debug_mode = gr.Checkbox(label="Debug Mode", value=False)
 
@@ -71,6 +72,7 @@ with gr.Blocks() as demo:
                     require_video,
                     reuiqre_audio,
                     reuiqre_danmaku,
+                    require_cover,
                     video_quality,
                     audio_quality,
                     debug_mode,
@@ -112,6 +114,7 @@ with gr.Blocks() as demo:
                 require_video = gr.Checkbox(label="画面", value=True)
                 reuiqre_audio = gr.Checkbox(label="音频", value=True)
                 reuiqre_danmaku = gr.Checkbox(label="弹幕", value=False)
+                require_cover = gr.Checkbox(label="封面", value=False)
 
             # debug模式
             debug_mode = gr.Checkbox(label="Debug Mode", value=False)
@@ -145,6 +148,7 @@ with gr.Blocks() as demo:
                     require_video,
                     reuiqre_audio,
                     reuiqre_danmaku,
+                    require_cover,
                     video_quality,
                     audio_quality,
                     debug_mode,
@@ -177,6 +181,7 @@ with gr.Blocks() as demo:
             require_video = gr.Checkbox(label="画面", value=True)
             reuiqre_audio = gr.Checkbox(label="音频", value=True)
             reuiqre_danmaku = gr.Checkbox(label="弹幕", value=False)
+            require_cover = gr.Checkbox(label="封面", value=False)
 
         debug_mode = gr.Checkbox(label="Debug Mode", value=False)
 
@@ -208,6 +213,7 @@ with gr.Blocks() as demo:
                 reuiqre_audio,
                 require_video,
                 reuiqre_danmaku,
+                require_cover,
                 video_quality,
                 audio_quality,
                 debug_mode,
@@ -239,6 +245,7 @@ with gr.Blocks() as demo:
             require_video = gr.Checkbox(label="画面", value=True)
             require_audio = gr.Checkbox(label="音频", value=True)
             require_danmaku = gr.Checkbox(label="弹幕", value=False)
+            require_cover = gr.Checkbox(label="封面", value=False)
 
         debug_mode = gr.Checkbox(label="Debug Mode", value=False)
 
@@ -264,6 +271,7 @@ with gr.Blocks() as demo:
                 require_video,
                 require_audio,
                 require_danmaku,
+                require_cover,
                 video_quality,
                 audio_quality,
                 debug_mode,
@@ -307,6 +315,7 @@ with gr.Blocks() as demo:
             require_video = gr.Checkbox(label="画面", value=True)
             require_audio = gr.Checkbox(label="音频", value=True)
             require_danmaku = gr.Checkbox(label="弹幕", value=False)
+            require_cover = gr.Checkbox(label="封面", value=False)
 
         debug_mode = gr.Checkbox(label="Debug Mode", value=False)
 
@@ -339,6 +348,7 @@ with gr.Blocks() as demo:
                 require_video,
                 require_audio,
                 require_danmaku,
+                require_cover,
                 video_quality,
                 audio_quality,
                 debug_mode,
