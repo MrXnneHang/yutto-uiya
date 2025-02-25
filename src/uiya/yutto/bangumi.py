@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from _typing import AudioQuality, CommandGenerator, CommandStatus, VideoQuality
-from utils.subproc import run_command
+from uiya._typing import AudioQuality, CommandGenerator, CommandStatus, VideoQuality
+from uiya.utils.subproc import run_command
 
 # 番剧默认参数
 status: CommandStatus = {

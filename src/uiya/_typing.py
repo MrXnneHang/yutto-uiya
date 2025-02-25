@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Literal, TypedDict
 
-from utils.config import load_config
+from uiya.utils.config import load_config
 
 ResourceType = Literal["bangumi", "video", "video_list", "collection", "favor", "space"]
 VideoQuality = Literal[
@@ -177,7 +177,7 @@ class CommandGenerator:
         ):
             self.args = ["yutto", self.url, "--audio-only"]
         # 7.[] [] [x] [x], danmaku with cover, failed!
-        # 没有下载封面的情况下是无法保留封面的哦～
+        # TODO:没有下载封面的情况下是无法保留封面的哦～
         if (
             not self.require_video
             and not self.require_audio
