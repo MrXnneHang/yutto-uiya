@@ -4,7 +4,12 @@ version = "1.0.2"
 description = ""
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = []
+dependencies = [
+    "gradio==5.16.1",
+    "pyaml==25.1.0",
+    "socksio==1.0.0",
+    "yutto",
+]
 authors = [{ name = "MrXnneHang", email = "XnneHang@gmail.com" }]
 keywords = []
 license = { text = "MIT" }
@@ -28,13 +33,13 @@ Repository = "https://github.com/MrXnneHang/yutto-uiya"
 Issues = "https://github.com/MrXnneHang/yutto-uiya/issues"
 
 [project.scripts]
-moelib = "moelib.__main__:main"
+uiya = "uiya.__main__:main"
 
-[dependency-groups]
-dev = [
-  "pyaml>=25.1.0",
-  "gradio>=5.16.1",
-]
+[tool.uv.workspace]
+members = ["packages/*"]
+
+[tool.uv.sources]
+yutto = { git = "https://github.com/MrXnneHang/yutto.git", rev = "depndency-adjust" }
 
 [tool.pyright]
 include = ["src/uiya", "tests"]
@@ -91,9 +96,14 @@ ignore = [
 
 [tool.ruff.lint.isort]
 required-imports = ["from __future__ import annotations"]
-known-first-party = ["moelib"]
+known-first-party = ["uiya"]
 combine-as-imports = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/uiya"]
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+
