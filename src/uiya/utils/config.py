@@ -38,18 +38,17 @@ def load_config() -> dict[str, bool | str]:
 对于windows用户,创建在C:/User/你的用户名/.config/yutto.yaml,
 对于非windows用户，创建在~/.config/yutto_uiya.yaml.
 
-格式:
+默认配置:
 
-SESS_DATA: "" # SESSDATA,用来伪装登陆信息
+SESS_DATA: "" # SESSDATA,用来伪装登陆信息,需要更高分辨率或者下载大会员视频，则需要填写，并且需要开通大会员。
 download_dir: "./downloads" # 下载后保存的路径
-# 这两个决定能下哪些视频，清晰度，用户有访问哪些视频的权限，就能下哪些视频，
-# 比如大会员视频就需要大会员登陆的SESSDATA
-# 而无登陆用户最高只能下载480p
 login_strict: true  # 仅当SESSDATA不为空时生效，严格校验登陆信息是否有效
                     # 如果SESSDATA填写错误，会导致校验失败。
 vip_strict: false   # 仅当SESSDATA不为空时生效，严格校验大会员，
                     # 如果不是大会员，请设置false,否则会无法下载。
                     # 如果是大会员，请设置true,否则有时候会被当成普通用户拦截。
+
+具体参见: https://github.com/MrXnneHang/yutto-uiya
 """
             )
             raise FileNotFoundError("配置文件不存在")
