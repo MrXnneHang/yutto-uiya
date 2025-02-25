@@ -69,7 +69,7 @@ class CommandStatus(TypedDict):
 
 @dataclass
 class ConfigParser:
-    config = load_config("./configs/args.yaml")
+    config = load_config()
     SESS_DATA: str = str(config["SESS_DATA"])
     download_dir: str = str(config["download_dir"])
     login_strict: bool = bool(config["login_strict"])
