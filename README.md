@@ -52,22 +52,58 @@ brew install ffmpeg # mac
 sudo apt install ffmpeg # linux
 ```
 
-然后配置`python`环境:<br>
+然后你可以直接从我的仓库安装。<br>
 
 ```shell
-# python >=3.9
+# python >=3.10
 git clone https://github.com/MrXnneHang/yutto-uiya.git
-cd yutto-uiya/
-pip install pip install git+https://github.com/MrXnneHang/yutto.git@depndency-adjust # 因为 yutto 2.0.1 在 aiofiles 的依赖上和 gradio 有冲突，但又没有代码冲突，所以我手动调整了一下依赖版本
-pip install -r requirements.txt
+# 用 uv 安装, 更快。
+uv pip install git+https://github.com/MrXnneHang/yutto-uiya.git@gradio-webui
+# 或者用 pip 安装
+pip install git+https://github.com/MrXnneHang/yutto-uiya.git@gradio-webui
 ```
 
 ## 启动:<br>
 
 ```shell
-cd src/yutto-uiya
-python __main__.py
+(test-uiya) xnne@xnne-PC:~/code/test-uiya$ uiya
+* Running on local URL:  http://127.0.0.1:7860
+
+To create a public link, set `share=True` in `launch()`
 ```
+
+## 关于配置文件:
+
+`./yutto_uiya.yaml`
+
+如果你保持在这个目录下使用，你可以直接修改这个文件。如果你希望在任何地方都可以使用，那么可以考虑把该文件复制到你的`USER_HOME/.config/`下方.有时候`.config`文件夹需要自己创建。<br>
+
+对于 linux/mac 用户来说: `~/.config/yutto_uiya.yaml`
+
+对于 windows 用户来说: `C:/User/Zhouyuan(你的用户名)/.config/yutto_uiya.yaml`
+
+并且把考虑把`download_dir`改成绝对目录。<br>
+
+```yaml
+SESS_DATA: "" # SESSDATA,用来伪装登陆信息
+download_dir: "./downloads" # 下载后保存的路径
+
+# 这两个决定能下哪些视频，清晰度，用户有访问哪些视频的权限，就能下哪些视频，
+# 比如大会员视频就需要大会员登陆的SESSDATA
+# 而无登陆用户最高只能下载480p
+login_strict: true # 仅当SESSDATA不为空时生效，严格校验登陆信息是否有效
+                   # 如果SESSDATA填写错误，会导致校验失败。
+vip_strict: false # 仅当SESSDATA不为空时生效，严格校验大会员，
+                  # 如果不是大会员，请设置false,否则会无法下载。
+                  # 如果是大会员，请设置true,否则有时候会被当成普通用户拦截。
+```
+
+SESSDATA是用来伪装登陆的，它会决定你的访问权限，如果需要下载更高分辨率或者对于需要大会员才能下载的资源则需要**获取SESSDATA**。<br>
+
+具体方式参考[`./SESS_DATA/README.md`](https://github.com/MrXnneHang/yutto-uiya/tree/gradio-webui/SESS_DATA)<br>.
+
+
+
 ## 预览：
 ![image-20250220195748641](https://fastly.jsdelivr.net/gh/MrXnneHang/blog_img/BlogHosting/img/25/02/202502202049967.png)
 ![alt text](https://fastly.jsdelivr.net/gh/MrXnneHang/blog_img/BlogHosting/img/24/11/202411271939914.png)
@@ -96,47 +132,14 @@ vip_strict: false # 仅当SESSDATA不为空时生效，严格校验大会员，
 
 ## 如何使用:
 
-### 下载更高的清晰度或者大会员视频(你需要SESSDATA)
-
-`sess_data`的获取:<br>
-
-![image-20250220200623220](https://fastly.jsdelivr.net/gh/MrXnneHang/blog_img/BlogHosting/img/25/02/202502202006049.png)
-
-你可以参考 [yutto 文档](https://yutto.nyakku.moe/guide/cli/basic)中提到的方法进行获取。或者使用我的脚本。<br>
-
-你可以先下载`chrome-driver`和`chrome`然后根据你的路径配置`./configs/chrome.yaml`，然后运行:<br>
-
-`chrome.yaml`: 配置`chrome-driver`来获取`sess_data`,如果你可以手动获取`sess_data`，那么这个文件可以不用配置。<br>
-
-```yaml
-chrome_driver: './chromedriver-linux64/chromedriver' # chrome-driver 路径
-chrome: './chrome-linux64/chrome' # chrome 路径
-
-# 如果你还没有使用过它们，你可以到这里下载你系统对应的版本:
-# https://googlechromelabs.github.io/chrome-for-testing/#stable
-# 然后解压，指定正确路径即可
-
-target_url: 'https://www.bilibili.com/'
-```
-
-
-```shell
-python webrowser_config.py
-```
-
-第一次打开后需要在打开的`chrome`页面中登陆你的`bilibili`账号，然后关闭页面，再次运行可以得到SESS_DATA。在终端中找到你的`SESSDATA`然后写入到`args.yaml`中。<br>
-
-不过看起来似乎更麻烦？<br>
-
-我会在做整合包的时候利用整合包环境直接 sh 或者 bat 脚本。<br>
-
 ### 如何用它下载视频:
 
 我为每个功能都在`webui`中写了说明，放心食用~<br>
 
 ## 待开发:
 
-- [ ] 提供单独下载音频、视频、弹幕、封面的勾选项。放在webui中。 （还差封面）
+- [x] 提供单独下载音频、视频、弹幕、封面的勾选项。放在webui中。 
 - [ ] 结合 nfo 显示部分视频信息。
 - [ ] 提供手动选集。 
-- [x] Typing，优化代码结构，让代码变得优雅.   
+- [x] Typing，优化代码结构，让代码变得优雅.    
+- [x]  release as a python package
