@@ -31,14 +31,13 @@ src/yutto-uiya/
 │
 ├── utils/ # 这里是我们的工具包,只依赖于python标准库，以及一些第三方库，不依赖我们自己写的代码
 │
-├── configs/ # ffmpeg 等等配置文件我们会尝试放在这里.
-│ └──  args.yaml # 和 yutto 相关的配置。
-│
 └── __main__.py # 这个是我们的 webui 入口文件
 │
 └──  api.py # 封装好的各个交互事件
 │
 └──  _typing.py # 记录一些数据结构以及变量含义
+
+yutto_uiya.yaml # 配置文件，存放在 workdir 或者 user_home/.config/ 下
 
 ```
 ## 如何部署它:
