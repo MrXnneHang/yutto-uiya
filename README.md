@@ -32,7 +32,7 @@ src/yutto-uiya/
 ├── utils/ # 这里是我们的工具包,只依赖于python标准库，以及一些第三方库，不依赖我们自己写的代码
 │
 ├── configs/ # ffmpeg 等等配置文件我们会尝试放在这里.
-│ └──  args.yaml # 和 yutto 相关的配置。 
+│ └──  args.yaml # 和 yutto 相关的配置。
 │
 └── __main__.py # 这个是我们的 webui 入口文件
 │
@@ -138,8 +138,29 @@ vip_strict: false # 仅当SESSDATA不为空时生效，严格校验大会员，
 
 ## 待开发:
 
-- [x] 提供单独下载音频、视频、弹幕、封面的勾选项。放在webui中。 
+- [x] 提供单独下载音频、视频、弹幕、封面的勾选项。放在webui中。
 - [ ] 结合 nfo 显示部分视频信息。
-- [ ] 提供手动选集。 
-- [x] Typing，优化代码结构，让代码变得优雅.    
-- [x]  release as a python package
+- [ ] 提供手动选集。
+- [ ] 提供不同的保存格式。
+- [ ] 加入覆盖下载。（目前当下载已下载的视频不同清晰度，会跳过。无法下载不同清晰度。）
+- [ ] 首次运行自动创建配置文件
+- [x] Typing，优化代码结构，让代码变得优雅.
+- [x] release as a python lib
+
+
+## 2025.2.24 v1.0.2 更新:
+
+- 加入`画面`、`音频`、`弹幕`、`封面`的下载选项。15种组合可以自由选择。`封面+弹幕`的形式在yutto层面暂不支持，我到时候还需要PR一下。<br>
+  当画面和音频同时选择的时候，会把画面和音频合并成一个视频。<br>
+  画面单独选择的时候，会生成无声mp4。音频单独选择，会单独音频的m4a。<br>
+- **你可以直接从我的仓库安装。**<br>
+```shell
+# python >=3.10
+# 用 pip
+pip install git+https://github.com/MrXnneHang/yutto-uiya@gradio-webui
+# 用 uv, 更快
+uv pip install git+https://github.com/MrXnneHang/yutto-uiya@gradio-webui
+```
+但你需要关注配置文件相关的部分。<br>
+- 优化代码结构。
+  感谢`yutto`仓库，抄作业成功 =-=。
