@@ -185,7 +185,7 @@ class CommandGenerator:
             and self.require_cover
         ):
             self.args = ["yutto", self.url, "--danmaku-only", "--save-cover"]
-            raise ValueError("目前暂时不支持封面+弹幕")
+            raise ValueError("目前暂时不支持封面+弹幕 =-=")
         # 8.[x] [] [x] [], video with danmaku,pass!
         if (
             self.require_video
