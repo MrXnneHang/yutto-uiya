@@ -35,7 +35,9 @@ src/yutto-uiya/
 │
 └──  api.py # 封装好的各个交互事件
 │
-└──  _typing.py # 记录一些数据结构以及变量含义
+└──  _typing.py # 记录一些变量含义
+│
+└── _dataclass.py # 存放一些特殊的数据结构
 
 yutto_uiya.yaml # 配置文件，存放在 workdir 或者 user_home/.config/ 下
 
