@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from uiya._typing import AudioQuality, CommandGenerator, CommandStatus, VideoQuality
+from uiya._typing import AudioQuality, CommandStatus, VideoQuality
+from uiya._dataclass import CommandGenerator
 from uiya.utils.subproc import run_command
 
 # 视频默认参数
@@ -30,7 +31,7 @@ def user_video(
     video_quality: VideoQuality,
     audio_quality: AudioQuality,
     SESS_DATA: str = "",
-    debug_mode=False,
+    debug_mode: bool = False,
 ) -> str:
     """
     下载指定视频（非列表形式，如果是列表，请用user_video_list）
@@ -81,7 +82,7 @@ def user_video_list(
     video_quality: VideoQuality,
     audio_quality: AudioQuality,
     SESS_DATA: str = "",
-    debug_mode=False,
+    debug_mode: bool = False,
 ) -> str:
     """
     下载整个视频列表或者其中选定部分
@@ -131,7 +132,7 @@ def user_collection_video(
     video_quality: VideoQuality,
     audio_quality: AudioQuality,
     SESS_DATA: str = "",
-    debug_mode=False,
+    debug_mode: bool = False,
 ) -> str:
     """
     下载整个合集列表
@@ -179,7 +180,7 @@ def user_favorlist_video(
     video_quality: VideoQuality,
     audio_quality: AudioQuality,
     SESS_DATA: str = "",
-    debug_mode=False,
+    debug_mode: bool = False,
 ) -> str:
     """
     下载指定收藏列表
@@ -229,7 +230,7 @@ def user_space_video(
     video_quality: VideoQuality,
     audio_quality: AudioQuality,
     SESS_DATA: str = "",
-    debug_mode=False,
+    debug_mode: bool = False,
 ) -> str:
     """
     下载整个合集列表或者其中选定部分

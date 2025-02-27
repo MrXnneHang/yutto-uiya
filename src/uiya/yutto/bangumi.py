@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from uiya._typing import AudioQuality, CommandGenerator, CommandStatus, VideoQuality
+from uiya._typing import AudioQuality, CommandStatus, VideoQuality
+from uiya._dataclass import CommandGenerator
 from uiya.utils.subproc import run_command
 
 # 番剧默认参数
@@ -34,7 +35,7 @@ def bangumi_batch_download(
     video_quality: VideoQuality,
     audio_quality: AudioQuality,
     SESS_DATA: str = "",
-    debug_mode=False,
+    debug_mode: bool = False,
 ) -> str:
     """
     下载单个番剧的指定一集

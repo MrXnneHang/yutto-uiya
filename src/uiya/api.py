@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from uiya._typing import AudioQuality, ConfigParser, VideoQuality
+from uiya._typing import AudioQuality, VideoQuality
+from uiya._dataclass import ConfigParser
 from uiya.yutto.bangumi import bangumi_batch_download
 from uiya.yutto.user_videos import (
     user_collection_video,
