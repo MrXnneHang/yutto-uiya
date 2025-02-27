@@ -111,9 +111,7 @@ SESSDATA是用来伪装登陆的，它会决定你的访问权限，如果需要
 
 ## 一些配置:
 
-参见[`./configs/`](https://github.com/MrXnneHang/yutto-uiya/tree/gradio-webui/configs):<br>
-
-- `args.yaml`:
+- `yutto_uiya.yaml`:
 ```yaml
 SESSDATA: "" # SESSDATA,用来伪装登陆信息
 download_dir: "./downloads" # 下载后保存的路径
